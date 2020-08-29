@@ -8,6 +8,7 @@ import (
     "net/url"
     "log"
     "time"
+    s    "secrets"
 )
 
 type OWM struct {
@@ -68,7 +69,7 @@ func main() {
         fmt.Println("usage: weather <zip>")
         os.Exit(3)
     }
-    var apikey string = "Don't take my Secrets!"
+    apikey := s.GetKey(1)
     // QueryEscape lets us put it into a url
     safezip := url.QueryEscape(zip)
     safekey := url.QueryEscape(apikey)
