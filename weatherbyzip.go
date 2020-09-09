@@ -69,7 +69,7 @@ func main() {
         fmt.Println("usage: weather <zip>")
         os.Exit(3)
     }
-    apikey := s.GetKey(1)
+    apikey := s.GetKey() // Get your own key from openweathermap.org
     // QueryEscape lets us put it into a url
     safezip := url.QueryEscape(zip)
     safekey := url.QueryEscape(apikey)
@@ -106,12 +106,23 @@ func main() {
     }
 
     fmt.Printf("City: %s\n", record.Name)
+    fmt.Printf("Weather:      %s\n", record.Weather[0].Main)
     fmt.Printf("Temperature:  %g\n", record.Main.Temp)
     fmt.Printf("Feels Like:   %g\n", record.Main.FeelsLike)
     fmt.Printf("Humidity:     %d%%\n", record.Main.Humidity)
     fmt.Printf("Current Time: %s\n", time.Now().Format("15:04:05"))
     fmt.Printf("Sunrise:      %s\n", epochToHumanReadable(record.Sys.Sunrise).Format("15:04:05"))
     fmt.Printf("Sunset:       %s\n", epochToHumanReadable(record.Sys.Sunset).Format("15:04:05"))
+    fmt.Printf("Latitude:     %g\n", record.Coord.Lat)
+    fmt.Printf("Longitude:    %g\n", record.Coord.Lon)
 
+    /*
+	 * Weather []struct {
+	 * 	ID          int    `json:"id"`
+	 * 	Main        string `json:"main"`
+	 * 	Description string `json:"description"`
+	 * 	Icon        string `json:"icon"`
+	 * } `json:"weather"`
+     */
 }
 
