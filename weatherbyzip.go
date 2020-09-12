@@ -8,7 +8,9 @@ import (
     "net/url"
     "log"
     "time"
+    "strconv"
     s    "secrets"
+    a    "aqi"
 )
 
 type OWM struct {
@@ -105,16 +107,23 @@ func main() {
         log.Println(err)
     }
 
+    lat := strconv.FormatFloat(record.Coord.Lat, 'f', -1, 64)
+    lon := strconv.FormatFloat(record.Coord.Lon, 'f', -1, 64)
+
+    aqival, _, mainpol := a.GetAqi(3, lat, lon)
+
     fmt.Printf("City: %s\n", record.Name)
-    fmt.Printf("Weather:      %s\n", record.Weather[0].Main)
-    fmt.Printf("Temperature:  %g\n", record.Main.Temp)
-    fmt.Printf("Feels Like:   %g\n", record.Main.FeelsLike)
-    fmt.Printf("Humidity:     %d%%\n", record.Main.Humidity)
-    fmt.Printf("Current Time: %s\n", time.Now().Format("15:04:05"))
-    fmt.Printf("Sunrise:      %s\n", epochToHumanReadable(record.Sys.Sunrise).Format("15:04:05"))
-    fmt.Printf("Sunset:       %s\n", epochToHumanReadable(record.Sys.Sunset).Format("15:04:05"))
-    fmt.Printf("Latitude:     %g\n", record.Coord.Lat)
-    fmt.Printf("Longitude:    %g\n", record.Coord.Lon)
+    fmt.Printf("Weather:         %s\n", record.Weather[0].Main)
+    fmt.Printf("Temperature:     %g\n", record.Main.Temp)
+    fmt.Printf("Air Quality:     %d\n", aqival)
+    fmt.Printf("Main Pollutant:  %s\n", mainpol)
+    fmt.Printf("Feels Like:      %g\n", record.Main.FeelsLike)
+    fmt.Printf("Humidity:        %d%%\n", record.Main.Humidity)
+    fmt.Printf("Current Time:    %s\n", time.Now().Format("15:04:05"))
+    fmt.Printf("Sunrise:         %s\n", epochToHumanReadable(record.Sys.Sunrise).Format("15:04:05"))
+    fmt.Printf("Sunset:          %s\n", epochToHumanReadable(record.Sys.Sunset).Format("15:04:05"))
+    fmt.Printf("Latitude:        %g\n", record.Coord.Lat)
+    fmt.Printf("Longitude:       %g\n", record.Coord.Lon)
 
     /*
 	 * Weather []struct {
