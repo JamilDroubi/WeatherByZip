@@ -4,6 +4,7 @@ This is a simple tool written in Go that can tell you basic info about the weath
 ### Setup
 #### Prerequisites:
  - Go version 1.15
+
 Clone this repo using `git clone https://github.com/JamilDroubi/WeatherByZip.git`
 
 Move into the folder `cd WeatherByZip`
